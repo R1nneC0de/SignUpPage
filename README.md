@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # inclass_10
+=======
+# act10
+>>>>>>> e2656fc (Initial commit)
 
 A new Flutter project.
 

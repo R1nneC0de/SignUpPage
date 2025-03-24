@@ -1,77 +1,137 @@
 import 'package:flutter/material.dart';
-void main() => runApp(const MyApp());
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
 class MyApp extends StatelessWidget {
-const MyApp({super.key});
-@override
-Widget build(BuildContext context) {
-const appTitle = 'Form Validation Demo';
-return MaterialApp(
-title: appTitle,
-home: Scaffold(
-appBar: AppBar(
-title: const Text(appTitle),
-),
-body: const MyCustomForm(),
-),
-);
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Signup Page',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: const SignupPage(),
+    );
+  }
 }
+
+class SignupPage extends StatefulWidget {
+  const SignupPage({super.key});
+
+  @override
+  State<SignupPage> createState() => _SignupPageState();
 }
-// Create a Form widget.
-class MyCustomForm extends StatefulWidget {
-const MyCustomForm({super.key});
-@override
-MyCustomFormState createState() {
-return MyCustomFormState();
+
+class _SignupPageState extends State<SignupPage> {
+  final _formKey = GlobalKey<FormBuilderState>();
+
+  // Email RegExp for manual validation
+  final RegExp _emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}$');
+
+  void _submitForm() {
+    if (_formKey.currentState?.saveAndValidate() ?? false) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const SuccessPage()),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please fix the errors')),
+      );
+    }
+  }
+
+  String? _validateName(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Name is required';
+    }
+    return null;
+  }
+
+  String? _validateEmail(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Email is required';
+    }
+    if (!_emailRegex.hasMatch(value)) {
+      return 'Enter a valid email';
+    }
+    return null;
+  }
+
+  String? _validatePassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Password is required';
+    }
+    if (value.length < 6) {
+      return 'Minimum 6 characters required';
+    }
+    return null;
+  }
+
+  String? _validateDOB(DateTime? value) {
+    if (value == null) {
+      return 'Date of birth is required';
+    }
+    return null;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Signup Page')),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: FormBuilder(
+          key: _formKey,
+          child: ListView(
+            children: [
+              FormBuilderTextField(
+                name: 'name',
+                decoration: const InputDecoration(labelText: 'Name'),
+                validator: _validateName,
+              ),
+              FormBuilderTextField(
+                name: 'email',
+                decoration: const InputDecoration(labelText: 'Email'),
+                keyboardType: TextInputType.emailAddress,
+                validator: _validateEmail,
+              ),
+              FormBuilderDateTimePicker(
+                name: 'dob',
+                decoration: const InputDecoration(labelText: 'Date of Birth'),
+                inputType: InputType.date,
+                validator: _validateDOB,
+              ),
+              FormBuilderTextField(
+                name: 'password',
+                decoration: const InputDecoration(labelText: 'Password'),
+                obscureText: true,
+                validator: _validatePassword,
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _submitForm,
+                child: const Text('Submit'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
-}
-// Create a corresponding State class.
-// This class holds data related to the form.
-class MyCustomFormState extends State<MyCustomForm> {
-// Create a global key that uniquely identifies the Form widget
-// and allows validation of the form.
-//
-// Note: This is a GlobalKey<FormState>,
-// not a GlobalKey<MyCustomFormState>.
-final _formKey = GlobalKey<FormState>();
-@override
-Widget build(BuildContext context) {
-// Build a Form widget using the _formKey created above.
-return Form(
-key: _formKey,
-child: Column(
-crossAxisAlignment: CrossAxisAlignment.start,
-children: [
-TextFormField(
-// The validator receives the text that the user has
-entered.
-validator: (value) {
-if (value == null || value.isEmpty) {
-return 'Please enter some text';
-}
-return null;
-},
-),
-Padding(
-padding: const EdgeInsets.symmetric(vertical: 16),
-child: ElevatedButton(
-onPressed: () {
-// Validate returns true if the form is valid, or false
-otherwise.
-if (_formKey.currentState!.validate()) {
-// If the form is valid, display a snackbar. In the
-real world,
-// you'd often call a server or save the information
-in a database.
-ScaffoldMessenger.of(context).showSnackBar(
-const SnackBar(content: Text('Processing Data')),
-);
-}
-},
-child: const Text('Submit'),
-),
-),
-],
-),
-);
-}
+
+class SuccessPage extends StatelessWidget {
+  const SuccessPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Success')),
+      body: const Center(child: Text('Signup Successful!')),
+    );
+  }
 }

@@ -90,12 +90,21 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
+<<<<<<< HEAD
             VALUE "FileDescription", "inclass_10" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "inclass_10" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2025 com.example. All rights reserved." "\0"
             VALUE "OriginalFilename", "inclass_10.exe" "\0"
             VALUE "ProductName", "inclass_10" "\0"
+=======
+            VALUE "FileDescription", "act10" "\0"
+            VALUE "FileVersion", VERSION_AS_STRING "\0"
+            VALUE "InternalName", "act10" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2025 com.example. All rights reserved." "\0"
+            VALUE "OriginalFilename", "act10.exe" "\0"
+            VALUE "ProductName", "act10" "\0"
+>>>>>>> e2656fc (Initial commit)
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

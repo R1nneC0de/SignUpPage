@@ -6,7 +6,11 @@ plugins {
 }
 
 android {
+<<<<<<< HEAD
     namespace = "com.example.inclass_10"
+=======
+    namespace = "com.example.act10"
+>>>>>>> e2656fc (Initial commit)
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -21,7 +25,11 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+<<<<<<< HEAD
         applicationId = "com.example.inclass_10"
+=======
+        applicationId = "com.example.act10"
+>>>>>>> e2656fc (Initial commit)
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion

@@ -1,6 +1,11 @@
 {
+<<<<<<< HEAD
     "name": "inclass_10",
     "short_name": "inclass_10",
+=======
+    "name": "act10",
+    "short_name": "act10",
+>>>>>>> e2656fc (Initial commit)
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
